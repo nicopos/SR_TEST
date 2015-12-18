@@ -27,17 +27,18 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private static final int VOICE_RECOGNITION_REQUEST_CODE = 1001;
-    private EditText met_texthint;
+    private EditText met_textpass;
     private Button mbt_speak;
     private Spinner ms_textmatches;
     private ListView mlv_textmatches;
+    private String pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        met_texthint = (EditText) findViewById(R.id.etTextHint);
+        met_textpass = (EditText) findViewById(R.id.etTextPass);
         mbt_speak = (Button) findViewById(R.id.btSpeak);
         ms_textmatches = (Spinner) findViewById(R.id.sNoOfMatches);
         mlv_textmatches = (ListView) findViewById(R.id.lvTextMatches);
@@ -54,17 +55,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void speak(View view){
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getClass().getPackage().getName());
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, met_texthint.getText().toString());
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
+
+        //pass = met_textpass.getText().toString();
+        if (!met_textpass.getText().toString().matches("")){
+            pass = met_textpass.getText().toString();
+            Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+            intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getClass().getPackage().getName());
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getResources().getString(R.string.searchint));
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
+            int noOfMatches = Integer.parseInt(ms_textmatches.getSelectedItem().toString());
+            intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, noOfMatches);
+            startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE);
+        }
+        else {
+            Toast.makeText(this, getResources().getString(R.string.pass_tocompare),Toast.LENGTH_SHORT).show();
+        }
         if (ms_textmatches.getSelectedItemPosition() == AdapterView.INVALID_POSITION){
             Toast.makeText(this, getResources().getString(R.string.NR_forSpinner),Toast.LENGTH_SHORT).show();
             return;
         }
-        int noOfMatches = Integer.parseInt(ms_textmatches.getSelectedItem().toString());
-        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, noOfMatches);
-        startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE);
+
     }
 
     @Override
@@ -80,6 +90,12 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else {
                     mlv_textmatches.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1,textMatchlist));
+                    if (pass.equals(textMatchlist.get(0))){
+                        Toast.makeText(this,"Ok Password",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(this,"Wrong Password",Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             }
         }
