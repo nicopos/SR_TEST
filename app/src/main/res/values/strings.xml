@@ -1,4 +1,24 @@
 <resources>
     <string name="app_name">Speech Recognizer Test</string>
     <string name="action_settings">Settings</string>
+    <string name="et_searchint">Texto prueba</string>
+    <string name="bt_speech">Hablar</string>
+    <string name="tvTextMatches">Text Matches</string>
+    <string name="s_nofmatches">Numero de pruebas</string>
+    <string-array name="sa_nofmatches">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
+    <string name="VR_notpresent">Reconocimiento de voz no presente</string>
+    <string name="NR_forSpinner">Por favor, seleccione Nº de Resultados de Spinner</string>
+    <string name="search">Buscar</string>
 </resources>

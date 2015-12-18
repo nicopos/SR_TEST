@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -12,8 +13,31 @@
     tools:context="com.example.nicolas.speechrecognizertest.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <TextView
+    <EditText
+        android:id="@+id/etTextHint"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:lines="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/et_searchint" />
+    <Button
+        android:id="@+id/btSpeak"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
-</RelativeLayout>
+        android:layout_gravity="center_horizontal"
+        android:text="@string/bt_speech" />
+
+    <Spinner
+        android:id="@+id/sNoOfMatches"
+        android:entries="@array/sa_nofmatches"
+        android:prompt="@string/s_nofmatches"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></Spinner>
+
+    <ListView
+        android:id="@+id/lvTextMatches"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
+
+</LinearLayout>
